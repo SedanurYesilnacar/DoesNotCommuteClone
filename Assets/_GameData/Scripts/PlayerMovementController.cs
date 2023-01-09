@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace _GameData.Scripts
 {
-    [RequireComponent(typeof(PlayerInputController), typeof(Rigidbody))]
+    [RequireComponent(typeof(Rigidbody))]
     public class PlayerMovementController : MonoBehaviour
     {
         [SerializeField] private float movementSpeed = 10f;
@@ -10,12 +10,10 @@ namespace _GameData.Scripts
 
         private Quaternion _deltaRotation;
 
-        private PlayerInputController _playerInputController;
         private Rigidbody _rb;
 
         private void Awake()
         {
-            _playerInputController = GetComponent<PlayerInputController>();
             _rb = GetComponent<Rigidbody>();
         }
 
@@ -32,7 +30,7 @@ namespace _GameData.Scripts
 
         private void Rotate()
         {
-            _deltaRotation = Quaternion.Euler(Vector3.up * (_playerInputController.GetInput * rotationSpeed * Time.fixedDeltaTime));
+            _deltaRotation = Quaternion.Euler(Vector3.up * (InputManager.Instance.GetInput * rotationSpeed * Time.fixedDeltaTime));
             _rb.MoveRotation(_rb.rotation * _deltaRotation);
         }
     }

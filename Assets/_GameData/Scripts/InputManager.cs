@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace _GameData.Scripts
 {
-    public class PlayerInputController : MonoBehaviour
+    public class InputManager : Singleton<InputManager>
     {
         public int GetInput => _input;
         private int _input;
