@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 namespace _GameData.Scripts
@@ -6,9 +5,11 @@ namespace _GameData.Scripts
     public class StageController : MonoBehaviour
     {
         [SerializeField] private Transform entranceTransform;
+        [SerializeField] private ExitController exitController;
         [SerializeField] private GameObject carPrefab;
-        
-        private GameObject _carInstance;
+
+        public GameObject CarInstance { get; private set; }
+        [field: SerializeField] public InputRecordData InputRecordData { get; private set; } = new InputRecordData();
 
         private void OnEnable()
         {
@@ -24,34 +25,37 @@ namespace _GameData.Scripts
         {
             ResetStage();
             
-            _carInstance = Instantiate(carPrefab, entranceTransform.position, entranceTransform.rotation, transform);
-            _carInstance.AddComponent<AIMovementController>();
+            CarInstance = Instantiate(carPrefab, entranceTransform.position, entranceTransform.rotation, transform);
+            AIMovementController ai = CarInstance.AddComponent<AIMovementController>();
+            ai.SetInputRecordData(InputRecordData);
         }
 
         public void InitPlayerStage()
         {
             ResetStage();
             
-            _carInstance = Instantiate(carPrefab, entranceTransform.position, entranceTransform.rotation, transform);
-            _carInstance.AddComponent<PlayerMovementController>();
-            
-            EventManager.Instance.RaiseOnStageInitialized(_carInstance.transform);
+            exitController.SetVisualVisibility(true);
+
+            CarInstance = Instantiate(carPrefab, entranceTransform.position, entranceTransform.rotation, transform);
+            CarInstance.AddComponent<PlayerMovementController>();
         }
 
         private void ResetStage()
         {
-            if(_carInstance == null) return;
+            exitController.SetVisualVisibility(false);
             
-            Destroy(_carInstance);
+            if(CarInstance == null) return;
+            
+            Destroy(CarInstance);
         }
 
-        private void OnCarReachExitHandler(GameObject car)
+        private void OnCarReachExitHandler(ExitController exit, GameObject car)
         {
-            if (car == _carInstance)
-            {
-                if (car.TryGetComponent(out AIMovementController aiController)) aiController.Stop();
-                else EventManager.Instance.RaiseOnStageCompleted();
-            }
+            if(exit != exitController) return;
+            if (car != CarInstance) return;
+
+            if (car.TryGetComponent(out AIMovementController aiController)) aiController.Stop();
+            else EventManager.Instance.RaiseOnStageCompleted();
         }
     }
 }

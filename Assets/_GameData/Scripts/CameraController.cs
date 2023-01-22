@@ -18,9 +18,9 @@ namespace _GameData.Scripts
             EventManager.Instance.OnStageInitialized -= OnStageInitializedHandler;
         }
 
-        private void OnStageInitializedHandler(Transform player)
+        private void OnStageInitializedHandler()
         {
-            _target = player;
+            _target = StageManager.Instance.CurrentStageCar;
         }
 
         private void LateUpdate()

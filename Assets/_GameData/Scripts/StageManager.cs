@@ -1,18 +1,20 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace _GameData.Scripts
 {
-    public class StageManager : MonoBehaviour
+    public class StageManager : Singleton<StageManager>
     {
         [SerializeField] private List<StageController> stageList;
 
         private int _currentStage;
 
+        public Transform CurrentStageCar { get; private set; }
+        public InputRecordData CurrentStageInputRecordData { get; private set; }
+
         private void Start()
         {
-            stageList[0].InitPlayerStage();
+            StartStage();
         }
 
         private void OnEnable()
@@ -27,12 +29,12 @@ namespace _GameData.Scripts
 
         private void OnStageCompletedHandler()
         {
-            StartNextStage();
+            _currentStage++;
+            StartStage();
         }
 
-        private void StartNextStage()
+        private void StartStage()
         {
-            _currentStage++;
             if (_currentStage > stageList.Count - 1) _currentStage = 0;
             
             stageList[_currentStage].InitPlayerStage();
@@ -41,6 +43,15 @@ namespace _GameData.Scripts
             {
                 stageList[i].InitAIStage();
             }
+            
+            GetStageElements();
+            EventManager.Instance.RaiseOnStageInitialized();
+        }
+
+        private void GetStageElements()
+        {
+            CurrentStageCar = stageList[_currentStage].CarInstance.transform;
+            CurrentStageInputRecordData = stageList[_currentStage].InputRecordData;
         }
     }
 }

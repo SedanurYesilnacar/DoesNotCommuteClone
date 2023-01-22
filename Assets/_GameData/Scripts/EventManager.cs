@@ -5,11 +5,11 @@ namespace _GameData.Scripts
 {
     public class EventManager : Singleton<EventManager>
     {
-        public Action<GameObject> OnCarReachExit;
-        public void RaiseOnCarReachExit(GameObject car) => OnCarReachExit?.Invoke(car);
+        public Action<ExitController, GameObject> OnCarReachExit;
+        public void RaiseOnCarReachExit(ExitController exit, GameObject car) => OnCarReachExit?.Invoke(exit, car);
         
-        public Action<Transform> OnStageInitialized;
-        public void RaiseOnStageInitialized(Transform currentPlayer) => OnStageInitialized?.Invoke(currentPlayer);
+        public Action OnStageInitialized;
+        public void RaiseOnStageInitialized() => OnStageInitialized?.Invoke();
         
         public Action OnStageCompleted;
         public void RaiseOnStageCompleted() => OnStageCompleted?.Invoke();
