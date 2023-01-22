@@ -9,7 +9,7 @@ namespace _GameData.Scripts
         [SerializeField] private GameObject carPrefab;
 
         public GameObject CarInstance { get; private set; }
-        [field: SerializeField] public InputRecordData InputRecordData { get; private set; } = new InputRecordData();
+        public CarRecordData CarRecordData { get; } = new();
 
         private void OnEnable()
         {
@@ -27,14 +27,14 @@ namespace _GameData.Scripts
             
             CarInstance = Instantiate(carPrefab, entranceTransform.position, entranceTransform.rotation, transform);
             AIMovementController ai = CarInstance.AddComponent<AIMovementController>();
-            ai.SetInputRecordData(InputRecordData);
+            ai.Init(CarRecordData);
         }
 
         public void InitPlayerStage()
         {
             ResetStage();
             
-            exitController.SetVisualVisibility(true);
+            exitController.SetVisibility(true);
 
             CarInstance = Instantiate(carPrefab, entranceTransform.position, entranceTransform.rotation, transform);
             CarInstance.AddComponent<PlayerMovementController>();
@@ -42,7 +42,7 @@ namespace _GameData.Scripts
 
         private void ResetStage()
         {
-            exitController.SetVisualVisibility(false);
+            exitController.SetVisibility(false);
             
             if(CarInstance == null) return;
             

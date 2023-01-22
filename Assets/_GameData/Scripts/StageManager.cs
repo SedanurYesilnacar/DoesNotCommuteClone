@@ -10,7 +10,7 @@ namespace _GameData.Scripts
         private int _currentStage;
 
         public Transform CurrentStageCar { get; private set; }
-        public InputRecordData CurrentStageInputRecordData { get; private set; }
+        public CarRecordData CurrentStageCarRecordData { get; private set; }
 
         private void Start()
         {
@@ -51,7 +51,7 @@ namespace _GameData.Scripts
         private void GetStageElements()
         {
             CurrentStageCar = stageList[_currentStage].CarInstance.transform;
-            CurrentStageInputRecordData = stageList[_currentStage].InputRecordData;
+            CurrentStageCarRecordData = stageList[_currentStage].CarRecordData;
         }
     }
 }

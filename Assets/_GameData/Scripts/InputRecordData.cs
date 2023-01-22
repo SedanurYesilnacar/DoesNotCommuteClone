@@ -1,15 +1,23 @@
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace _GameData.Scripts
 {
     [Serializable]
-    public class InputRecordData
+    public class CarRecordData
     {
-        public List<int> recordedData;
+        public List<RecordData> recordedData;
         
-        public InputRecordData() => recordedData = new List<int>();
+        public CarRecordData() => recordedData = new List<RecordData>();
 
-        public void SaveData(int data) => recordedData.Add(data);
+        public void SaveData(RecordData data) => recordedData.Add(data);
+    }
+
+    public struct RecordData
+    {
+        public Vector3 position;
+        public Vector3 rotation;
+        public Vector3 velocity;
     }
 }

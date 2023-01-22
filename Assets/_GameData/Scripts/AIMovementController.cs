@@ -2,13 +2,13 @@ namespace _GameData.Scripts
 {
     public class AIMovementController : CarMovementController
     {
-        private InputRecordData _inputRecordData;
+        private const float CarMass = 50f;
+        
+        private CarRecordData _carRecordData;
         
         private int _frameCounter;
         private bool _isReplaying;
-
-        public void SetInputRecordData(InputRecordData inputRecordData) => _inputRecordData = inputRecordData;
-
+        
         private void OnEnable()
         {
             EventManager.Instance.OnStageInitialized += OnStageInitializedHandler;
@@ -19,24 +19,32 @@ namespace _GameData.Scripts
             EventManager.Instance.OnStageInitialized -= OnStageInitializedHandler;
         }
 
-        public void Stop()
+        public void Init(CarRecordData carRecordData)
         {
-            movementSpeed = 0;
+            _carRecordData = carRecordData;
+            rb.mass = CarMass;
         }
 
-        protected override void FixedUpdate()
+        public void Stop()
+        {
+            rb.isKinematic = true;
+        }
+
+        private void FixedUpdate()
         {
             if(!_isReplaying) return;
             
             Replay();
-            base.FixedUpdate();
         }
 
         private void Replay()
         {
-            if (_frameCounter < _inputRecordData.recordedData.Count)
+            if (_frameCounter < _carRecordData.recordedData.Count)
             {
-                input = _inputRecordData.recordedData[_frameCounter];
+                transform.position = _carRecordData.recordedData[_frameCounter].position;
+                transform.eulerAngles = _carRecordData.recordedData[_frameCounter].rotation;
+                rb.velocity = _carRecordData.recordedData[_frameCounter].velocity;
+                
                 _frameCounter++;
             }
         }

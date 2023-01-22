@@ -15,6 +15,6 @@ namespace _GameData.Scripts
             }
         }
 
-        public void SetVisualVisibility(bool isVisible) => exitVisual.SetActive(isVisible);
+        public void SetVisibility(bool isVisible) => exitVisual.SetActive(isVisible);
     }
 }
