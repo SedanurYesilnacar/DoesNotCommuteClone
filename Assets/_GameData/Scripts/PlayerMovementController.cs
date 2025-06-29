@@ -16,6 +16,8 @@ namespace _GameData.Scripts
 
         private bool _isRecording;
 
+        private LayerMask _crashLayer;
+
         private void OnEnable()
         {
             EventManager.Instance.OnStageInitialized += OnStageInitializedHandler;
@@ -24,6 +26,12 @@ namespace _GameData.Scripts
         private void OnDisable()
         {
             EventManager.Instance.OnStageInitialized -= OnStageInitializedHandler;
+        }
+
+        public void Init()
+        {
+            _crashLayer = (1 << LayerMask.NameToLayer("Obstacle")) | 
+                                    (1 << LayerMask.NameToLayer("Car"));
         }
 
         private void Update()
@@ -39,6 +47,15 @@ namespace _GameData.Scripts
             Rotate();
             
             SaveData();
+        }
+
+        private void OnCollisionEnter(Collision collision)
+        {
+            if (((1 << collision.gameObject.layer) & _crashLayer) != 0)
+            {
+                _carRecordData.RemoveData();
+                EventManager.Instance.RaiseOnStageFailed();
+            }
         }
 
         private void Move()

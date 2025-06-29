@@ -13,6 +13,9 @@ namespace _GameData.Scripts
         
         public Action OnStageCompleted;
         public void RaiseOnStageCompleted() => OnStageCompleted?.Invoke();
+        
+        public Action OnStageFailed;
+        public void RaiseOnStageFailed() => OnStageFailed?.Invoke();
 
     }
 }

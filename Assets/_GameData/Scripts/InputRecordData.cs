@@ -12,6 +12,8 @@ namespace _GameData.Scripts
         public CarRecordData() => recordedData = new List<RecordData>();
 
         public void SaveData(RecordData data) => recordedData.Add(data);
+
+        public void RemoveData() => recordedData.Clear();
     }
 
     public struct RecordData

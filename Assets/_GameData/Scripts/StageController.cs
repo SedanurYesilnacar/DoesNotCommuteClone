@@ -37,7 +37,8 @@ namespace _GameData.Scripts
             exitController.SetVisibility(true);
 
             CarInstance = Instantiate(carPrefab, entranceTransform.position, entranceTransform.rotation, transform);
-            CarInstance.AddComponent<PlayerMovementController>();
+            PlayerMovementController player = CarInstance.AddComponent<PlayerMovementController>();
+            player.Init();
         }
 
         private void ResetStage()

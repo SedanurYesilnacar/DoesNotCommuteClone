@@ -20,17 +20,13 @@ namespace _GameData.Scripts
         private void OnEnable()
         {
             EventManager.Instance.OnStageCompleted += OnStageCompletedHandler;
+            EventManager.Instance.OnStageFailed += OnStageFailedHandler;
         }
 
         private void OnDisable()
         {
             EventManager.Instance.OnStageCompleted -= OnStageCompletedHandler;
-        }
-
-        private void OnStageCompletedHandler()
-        {
-            _currentStage++;
-            StartStage();
+            EventManager.Instance.OnStageFailed -= OnStageFailedHandler;
         }
 
         private void StartStage()
@@ -52,6 +48,17 @@ namespace _GameData.Scripts
         {
             CurrentStageCar = stageList[_currentStage].CarInstance.transform;
             CurrentStageCarRecordData = stageList[_currentStage].CarRecordData;
+        }
+
+        private void OnStageCompletedHandler()
+        {
+            _currentStage++;
+            StartStage();
+        }
+
+        private void OnStageFailedHandler()
+        {
+            StartStage();
         }
     }
 }
