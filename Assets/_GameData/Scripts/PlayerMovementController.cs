@@ -1,4 +1,4 @@
-using System;
+using System.Collections;
 using UnityEngine;
 
 namespace _GameData.Scripts
@@ -8,6 +8,10 @@ namespace _GameData.Scripts
         [SerializeField] private float movementSpeed = 10f;
         [SerializeField] private float rotationSpeed = 270f;
         
+        private ParticleSystem crashParticle;
+
+        private const float DelayBeforeFail = 1.5f;
+        
         private int _input;
         private Quaternion _deltaRotation;
         
@@ -15,8 +19,12 @@ namespace _GameData.Scripts
         private RecordData _recordData;
 
         private bool _isRecording;
+        private bool _isCrashed;
+        private bool _isMovementAllowed = true;
 
         private LayerMask _crashLayer;
+
+        private WaitForSeconds _delayBeforeFail;
 
         private void OnEnable()
         {
@@ -30,6 +38,9 @@ namespace _GameData.Scripts
 
         public void Init()
         {
+            crashParticle = GetComponentInChildren<ParticleSystem>();
+            
+            _delayBeforeFail = new WaitForSeconds(DelayBeforeFail);
             _crashLayer = (1 << LayerMask.NameToLayer("Obstacle")) | 
                                     (1 << LayerMask.NameToLayer("Car"));
         }
@@ -41,7 +52,7 @@ namespace _GameData.Scripts
 
         private void FixedUpdate()
         {
-            if(!_isRecording) return;
+            if(!_isRecording || !_isMovementAllowed) return;
             
             Move();
             Rotate();
@@ -53,8 +64,11 @@ namespace _GameData.Scripts
         {
             if (((1 << collision.gameObject.layer) & _crashLayer) != 0)
             {
-                _carRecordData.RemoveData();
-                EventManager.Instance.RaiseOnStageFailed();
+                if (!_isCrashed)
+                {
+                    _isCrashed = true;
+                    StartCoroutine(FailRoutine());
+                }
             }
         }
 
@@ -79,6 +93,18 @@ namespace _GameData.Scripts
         }
 
         private void SetCarRecordData(CarRecordData carRecordData) => _carRecordData = carRecordData;
+
+        private IEnumerator FailRoutine()
+        {
+            crashParticle.Play();
+            
+            _isMovementAllowed = false;
+            _carRecordData.RemoveData();
+            
+            yield return _delayBeforeFail;
+            
+            EventManager.Instance.RaiseOnStageFailed();
+        }
 
         private void OnStageInitializedHandler()
         {
