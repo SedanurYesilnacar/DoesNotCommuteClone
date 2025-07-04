@@ -1,3 +1,6 @@
+using Assets._GameData.Scripts;
+using UnityEngine;
+
 namespace _GameData.Scripts
 {
     public class AIMovementController : CarMovementController
@@ -19,10 +22,15 @@ namespace _GameData.Scripts
             EventManager.Instance.OnStageInitialized -= OnStageInitializedHandler;
         }
 
-        public void Init(CarRecordData carRecordData)
+        public void Init(CarRecordData carRecordData, GameObject carVisualPrefab)
         {
+            carProperty = GetComponent<CarProperty>();
+
             _carRecordData = carRecordData;
+            rb = carProperty.rb;
             rb.mass = CarMass;
+
+            Instantiate(carVisualPrefab, carProperty.carVisualRoot);
         }
 
         public void Stop()

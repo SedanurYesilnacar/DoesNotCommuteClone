@@ -1,3 +1,4 @@
+using Assets._GameData.Scripts;
 using UnityEngine;
 
 namespace _GameData.Scripts
@@ -6,10 +7,6 @@ namespace _GameData.Scripts
     public abstract class CarMovementController : MonoBehaviour
     {
         protected Rigidbody rb;
-        
-        private void Awake()
-        {
-            rb = GetComponent<Rigidbody>();
-        }
+        protected CarProperty carProperty;
     }
 }

@@ -1,3 +1,4 @@
+using Assets._GameData.Scripts;
 using System.Collections;
 using UnityEngine;
 
@@ -37,13 +38,17 @@ namespace _GameData.Scripts
             EventManager.Instance.OnStageInitialized -= OnStageInitializedHandler;
         }
 
-        public void Init()
+        public void Init(GameObject carVisualPrefab)
         {
-            crashParticle = GetComponentInChildren<ParticleSystem>();
+            carProperty = GetComponent<CarProperty>();
+            rb = carProperty.rb;
+            crashParticle = carProperty.crashParticle;
             
             _delayBeforeFail = new WaitForSeconds(DelayBeforeFail);
             _crashLayer = (1 << LayerMask.NameToLayer("Obstacle")) | 
                                     (1 << LayerMask.NameToLayer("Car"));
+
+            Instantiate(carVisualPrefab, carProperty.carVisualRoot);
         }
 
         private void Update()
