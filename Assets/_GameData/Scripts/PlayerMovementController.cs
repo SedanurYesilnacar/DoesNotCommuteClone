@@ -74,6 +74,7 @@ namespace _GameData.Scripts
 
         private void Move()
         {
+            rb.AddForce(Vector3.down * 30f);
             rb.MovePosition(rb.position + transform.forward * (movementSpeed * Time.fixedDeltaTime));
         }
 

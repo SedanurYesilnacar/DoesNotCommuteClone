@@ -44,7 +44,8 @@ GameObject:
   m_Component:
   - component: {fileID: 3270210138781821372}
   - component: {fileID: 3270210138781821373}
-  - component: {fileID: 3270210138781821371}
+  - component: {fileID: 7326459981045360062}
+  - component: {fileID: 1874411026659278396}
   m_Layer: 6
   m_Name: Car
   m_TagString: Untagged
@@ -94,10 +95,10 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 80
+  m_Constraints: 0
   m_CollisionDetection: 2
---- !u!65 &3270210138781821371
-BoxCollider:
+--- !u!136 &7326459981045360062
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -114,9 +115,34 @@ BoxCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1.37, y: 1, z: 2.58}
-  m_Center: {x: 0, y: 0.5, z: 0}
+  serializedVersion: 2
+  m_Radius: 0.25
+  m_Height: 1.3
+  m_Direction: 0
+  m_Center: {x: 0, y: 0.25, z: -0.67}
+--- !u!136 &1874411026659278396
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3270210138781821361}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.25
+  m_Height: 1.3
+  m_Direction: 0
+  m_Center: {x: 0, y: 0.25, z: 0.67}
 --- !u!1 &4972079891625810111
 GameObject:
   m_ObjectHideFlags: 0
