@@ -5,8 +5,9 @@ namespace _GameData.Scripts
 {
     public class PlayerMovementController : CarMovementController
     {
-        [SerializeField] private float movementSpeed = 10f;
-        [SerializeField] private float rotationSpeed = 270f;
+        private const float MovementSpeed = 10f;
+        private const float RotationSpeed = 270f;
+        private const float ExtraGravity = 30f;
         
         private ParticleSystem crashParticle;
 
@@ -74,13 +75,13 @@ namespace _GameData.Scripts
 
         private void Move()
         {
-            rb.AddForce(Vector3.down * 30f);
-            rb.MovePosition(rb.position + transform.forward * (movementSpeed * Time.fixedDeltaTime));
+            rb.AddForce(Vector3.down * ExtraGravity);
+            rb.MovePosition(rb.position + transform.forward * (MovementSpeed * Time.fixedDeltaTime));
         }
 
         private void Rotate()
         {
-            _deltaRotation = Quaternion.Euler(Vector3.up * (_input * rotationSpeed * Time.fixedDeltaTime));
+            _deltaRotation = Quaternion.Euler(Vector3.up * (_input * RotationSpeed * Time.fixedDeltaTime));
             rb.MoveRotation(rb.rotation * _deltaRotation);
         }
 
