@@ -8,6 +8,9 @@ namespace _GameData.Scripts
         public Action OnGameStarted;
         public void RaiseOnGameStarted() => OnGameStarted?.Invoke();
 
+        public Action OnGameWin;
+        public void RaiseOnGameWin() => OnGameWin?.Invoke();
+
         public Action OnMenuClicked;
         public void RaiseOnMenuClicked() => OnMenuClicked?.Invoke();
 

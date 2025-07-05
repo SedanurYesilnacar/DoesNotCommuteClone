@@ -28,9 +28,7 @@ namespace _GameData.Scripts
         }
 
         private void StartStage()
-        {
-            if (_currentStage > stageList.Count - 1) _currentStage = 0;
-            
+        {   
             stageList[_currentStage].InitPlayerStage();
             
             for (int i = 0; i < _currentStage; i++)
@@ -56,7 +54,15 @@ namespace _GameData.Scripts
         private void OnStageCompletedHandler()
         {
             _currentStage++;
-            StartStage();
+
+            if (_currentStage >= stageList.Count)
+            {
+                EventManager.Instance.RaiseOnGameWin();
+            }
+            else
+            {
+                StartStage();
+            }
         }
 
         private void OnStageFailedHandler()
