@@ -31,6 +31,8 @@ namespace _GameData.Scripts
             rb.mass = CarMass;
 
             Instantiate(carVisualPrefab, carProperty.carVisualRoot);
+
+            carProperty.arrow.SetVisibility(false);
         }
 
         public void Stop()

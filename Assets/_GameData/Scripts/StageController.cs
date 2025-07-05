@@ -39,7 +39,7 @@ namespace _GameData.Scripts
 
             CarInstance = Instantiate(carPrefab, entranceTransform.position, entranceTransform.rotation, transform);
             PlayerMovementController player = CarInstance.AddComponent<PlayerMovementController>();
-            player.Init(carVisualPrefab);
+            player.Init(carVisualPrefab, exitController.transform);
         }
 
         private void ResetStage()

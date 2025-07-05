@@ -38,7 +38,7 @@ namespace _GameData.Scripts
             EventManager.Instance.OnStageInitialized -= OnStageInitializedHandler;
         }
 
-        public void Init(GameObject carVisualPrefab)
+        public void Init(GameObject carVisualPrefab, Transform endPoint)
         {
             carProperty = GetComponent<CarProperty>();
             rb = carProperty.rb;
@@ -49,6 +49,9 @@ namespace _GameData.Scripts
                                     (1 << LayerMask.NameToLayer("Car"));
 
             Instantiate(carVisualPrefab, carProperty.carVisualRoot);
+
+            carProperty.arrow.Init(transform, endPoint);
+            carProperty.arrow.SetVisibility(true);
         }
 
         private void Update()
