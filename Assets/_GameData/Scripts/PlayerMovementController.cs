@@ -7,7 +7,7 @@ namespace _GameData.Scripts
     public class PlayerMovementController : CarMovementController
     {
         private const float MovementSpeed = 10f;
-        private const float RotationSpeed = 270f;
+        private const float RotationSpeed = 180f;
         private const float ExtraGravity = 30f;
         
         private ParticleSystem crashParticle;
