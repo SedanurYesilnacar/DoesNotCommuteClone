@@ -5,6 +5,12 @@ namespace _GameData.Scripts
 {
     public class EventManager : Singleton<EventManager>
     {
+        public Action OnGameStarted;
+        public void RaiseOnGameStarted() => OnGameStarted?.Invoke();
+
+        public Action OnMenuClicked;
+        public void RaiseOnMenuClicked() => OnMenuClicked?.Invoke();
+
         public Action<ExitController, GameObject> OnCarReachExit;
         public void RaiseOnCarReachExit(ExitController exit, GameObject car) => OnCarReachExit?.Invoke(exit, car);
         

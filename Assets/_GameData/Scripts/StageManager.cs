@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -12,19 +13,16 @@ namespace _GameData.Scripts
         public Transform CurrentStageCar { get; private set; }
         public CarRecordData CurrentStageCarRecordData { get; private set; }
 
-        private void Start()
-        {
-            StartStage();
-        }
-
         private void OnEnable()
         {
+            EventManager.Instance.OnGameStarted += OnGameStartedHandler;
             EventManager.Instance.OnStageCompleted += OnStageCompletedHandler;
             EventManager.Instance.OnStageFailed += OnStageFailedHandler;
         }
 
         private void OnDisable()
         {
+            EventManager.Instance.OnGameStarted -= OnGameStartedHandler;
             EventManager.Instance.OnStageCompleted -= OnStageCompletedHandler;
             EventManager.Instance.OnStageFailed -= OnStageFailedHandler;
         }
@@ -48,6 +46,11 @@ namespace _GameData.Scripts
         {
             CurrentStageCar = stageList[_currentStage].CarInstance.transform;
             CurrentStageCarRecordData = stageList[_currentStage].CarRecordData;
+        }
+
+        private void OnGameStartedHandler()
+        {
+            StartStage();
         }
 
         private void OnStageCompletedHandler()
