@@ -53,7 +53,7 @@ In this game, you control a series of cars, one at a time. Each car needs to rea
 
 1. Clone this repository:
    ```bash
-   git clone https://github.com/your-username/does-not-commute-clone.git
+   git clone https://github.com/SedanurYesilnacar/DoesNotCommuteClone.git
 2. Open the project in Unity 2022.3 LTS or later.
 3. Press Play to start testing the game.
 
